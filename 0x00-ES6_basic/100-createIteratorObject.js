@@ -1,4 +1,3 @@
-
 /* eslint eqeqeq: ["error", "always"] */
 /* eslint no-plusplus: "error" */
 export default function createIteratorObject(report) {
