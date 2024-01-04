@@ -1,14 +1,12 @@
-import * as utilsFunctions from "./utils";
+import { uploadPhoto, createUser } from './utils';
 
 export default function handleProfileSignup() {
-  Promise.allSettled([utilsFunctions.uploadPhoto(), utilsFunctions.createUser()])
-    .then(([photoResult, userResult]) => {
-      if (photoResult.status === 'fulfilled' && userResult.status === 'fulfilled') {
-        console.log(`${photoResult.value.body} Guillaume Salva`);
-      } else {
-        console.log('One or more tasks failed.');
-      }
-    })
-    .catch(() => console.log('Signup system offline'));
-}
+  const promisePhoto = uploadPhoto();
+  const promiseUser = createUser();
 
+  return Promise.all([promisePhoto, promiseUser]).then(([photo, user]) => {
+    console.log(`${photo.body} ${user.firstName} ${user.lastName}`);
+  }).catch(() => {
+    console.log('Signup system offline');
+  });
+}
